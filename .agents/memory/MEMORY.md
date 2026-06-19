@@ -1,0 +1,4 @@
+- [drizzle-zod v4 compat](drizzle-zod-v4-compat.md) — drizzle-zod v0.8.x uses Zod v4 internals; use $inferInsert/$inferSelect, not createSelectSchema
+- [Linear team states](linear-team-states.md) — "ai agents" team has no "Needs Review" state; valid states are Backlog/Todo/In Progress/Done/Canceled/Duplicate
+- [Clerk key forwarding](clerk-key-forwarding.md) — Replit sets CLERK_PUBLISHABLE_KEY; must forward to NEXT_PUBLIC_ via next.config.ts env block
+- [Webhook DB driver](webhook-db-driver.md) — webhook route uses @neondatabase/serverless (edge-safe), not lib/db node-postgres client
