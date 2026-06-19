@@ -12,6 +12,7 @@ import {
   Calendar,
   Settings,
   TrendingUp,
+  Zap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +24,7 @@ const navItems = [
   { href: "/dashboard/calendar", label: "Calendar", icon: Calendar },
   { href: "/dashboard/posts", label: "Published", icon: TrendingUp },
   { href: "/dashboard/settings", label: "Settings", icon: Settings },
+  { href: "/tracer", label: "Tracer", icon: Zap },
 ];
 
 export function DashboardNav() {

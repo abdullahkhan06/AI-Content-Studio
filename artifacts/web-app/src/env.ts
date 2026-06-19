@@ -12,6 +12,17 @@ const envSchema = z.object({
   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z
     .string()
     .min(1, "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is required"),
+
+  AI_INTEGRATIONS_OPENAI_BASE_URL: z.string().url().optional(),
+  AI_INTEGRATIONS_OPENAI_API_KEY: z.string().optional(),
+
+  MUAPI_API_KEY: z.string().optional(),
+
+  R2_ACCOUNT_ID: z.string().optional(),
+  R2_ACCESS_KEY_ID: z.string().optional(),
+  R2_SECRET_ACCESS_KEY: z.string().optional(),
+  R2_BUCKET_NAME: z.string().optional(),
+  R2_PUBLIC_URL: z.string().url().optional(),
 });
 
 function validateEnv(): z.infer<typeof envSchema> {
