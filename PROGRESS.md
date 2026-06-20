@@ -6,6 +6,17 @@
 **Phase Status:** AIA-8 done. AIA-10 + AIA-11 blocked on credentials (MUAPI_API_KEY, R2 keys).  
 **Next:** Provide MUAPI_API_KEY, R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME, R2_PUBLIC_URL to unblock AIA-10/11.
 
+---
+
+## Concepts Introduced (cumulative)
+<!-- Updated by agent after each slice. Don't re-explain known concepts in Linear comments. -->
+- AIA-3: Next.js framework, TypeScript strict mode, App Router, Tailwind CSS, shadcn/ui component library
+- AIA-1: Route-based authentication, middleware, protected routes
+- AIA-2: Schema-as-code, database migrations, webhook-driven data sync
+- AIA-8: End-to-end pipeline validation (tracer bullet pattern), environment variable validation
+
+---
+
 ### Phase 0.5 Slice Status
 
 | Slice | Title | Linear | Status |
