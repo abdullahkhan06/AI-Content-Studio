@@ -32,7 +32,8 @@ export function DashboardSidebar({ onClose }: SidebarProps) {
   const { user } = useUser();
 
   return (
-    <aside className="flex h-full w-64 flex-col bg-sidebar border-r border-sidebar-border">
+    // design.md §5: sidebar 280px expanded
+    <aside className="flex h-full w-[280px] flex-col bg-sidebar border-r border-sidebar-border">
       {/* Logo */}
       <div className="flex h-16 items-center gap-2 border-b border-sidebar-border px-6 shrink-0">
         <Sparkle weight="fill" className="h-5 w-5 text-sidebar-primary" />
