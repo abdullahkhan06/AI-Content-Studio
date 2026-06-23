@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { SignedIn, SignedOut, SignUpButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Star } from "@phosphor-icons/react";
 
@@ -40,18 +40,23 @@ export function FinalCTA() {
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <SignedOut>
-            <SignUpButton mode="modal">
-              <Button
-                size="lg"
-                className="gap-2 text-base px-8 font-semibold"
-              >
+            <Button
+              asChild
+              size="lg"
+              className="gap-2 text-base px-8 font-semibold"
+            >
+              <Link href="/sign-up">
                 Get started free
                 <ArrowRight weight="bold" className="h-4 w-4" />
-              </Button>
-            </SignUpButton>
+              </Link>
+            </Button>
           </SignedOut>
           <SignedIn>
-            <Button asChild size="lg" className="gap-2 text-base px-8 font-semibold">
+            <Button
+              asChild
+              size="lg"
+              className="gap-2 text-base px-8 font-semibold"
+            >
               <Link href="/dashboard">
                 Go to dashboard
                 <ArrowRight weight="bold" className="h-4 w-4" />

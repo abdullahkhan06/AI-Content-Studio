@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { SignedIn, SignedOut, SignUpButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react";
 
@@ -59,15 +59,23 @@ export function Hero() {
 
             <div className="flex flex-col sm:flex-row gap-3">
               <SignedOut>
-                <SignUpButton mode="modal">
-                  <Button size="lg" className="gap-2 text-base px-7 font-semibold">
+                <Button
+                  asChild
+                  size="lg"
+                  className="gap-2 text-base px-7 font-semibold"
+                >
+                  <Link href="/sign-up">
                     Start for free
                     <ArrowRight weight="bold" className="h-4 w-4" />
-                  </Button>
-                </SignUpButton>
+                  </Link>
+                </Button>
               </SignedOut>
               <SignedIn>
-                <Button asChild size="lg" className="gap-2 text-base px-7 font-semibold">
+                <Button
+                  asChild
+                  size="lg"
+                  className="gap-2 text-base px-7 font-semibold"
+                >
                   <Link href="/dashboard">
                     Go to dashboard
                     <ArrowRight weight="bold" className="h-4 w-4" />
@@ -82,7 +90,10 @@ export function Hero() {
                   key={item}
                   className="flex items-center gap-1.5 text-sm text-muted-foreground"
                 >
-                  <CheckCircle weight="fill" className="h-4 w-4 text-primary shrink-0" />
+                  <CheckCircle
+                    weight="fill"
+                    className="h-4 w-4 text-primary shrink-0"
+                  />
                   {item}
                 </li>
               ))}
@@ -109,12 +120,17 @@ function ProductMockup() {
       <div className="flex items-center gap-2 border-b border-border/60 px-4 py-3">
         <div className="flex gap-1.5">
           <div className="h-3 w-3 rounded-full bg-destructive/60" />
-          <div className="h-3 w-3 rounded-full" style={{ background: "oklch(0.78 0.18 85)" }} />
+          <div
+            className="h-3 w-3 rounded-full"
+            style={{ background: "oklch(0.78 0.18 85)" }}
+          />
           <div className="h-3 w-3 rounded-full bg-primary/60" />
         </div>
         <div className="flex-1 mx-4">
           <div className="h-6 rounded-md border border-border/40 bg-muted/30 flex items-center px-3">
-            <span className="text-xs text-muted-foreground">app.aicontentstudio.com/generate</span>
+            <span className="text-xs text-muted-foreground">
+              app.aicontentstudio.com/generate
+            </span>
           </div>
         </div>
       </div>
@@ -123,10 +139,14 @@ function ProductMockup() {
       <div className="p-5 space-y-4">
         {/* Status bar */}
         <div className="flex items-center justify-between">
-          <span className="text-xs font-medium text-foreground">Generate Content</span>
+          <span className="text-xs font-medium text-foreground">
+            Generate Content
+          </span>
           <div className="flex items-center gap-1.5 rounded-full bg-primary/15 px-3 py-1">
             <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-            <span className="text-xs text-primary font-medium">Generating…</span>
+            <span className="text-xs text-primary font-medium">
+              Generating…
+            </span>
           </div>
         </div>
 
@@ -158,15 +178,13 @@ function ProductMockup() {
           </div>
 
           <div className="p-4 space-y-3" style={{ background: "oklch(0.13 0 0)" }}>
-            <div className="flex items-start justify-between gap-3">
-              <p className="text-xs text-foreground leading-relaxed flex-1">
-                ✨ Start your morning right with our signature oat milk
-                cappuccino — smooth, rich, and crafted with care. ☕{" "}
-                <span className="text-primary">#SunriseCafé</span>{" "}
-                <span className="text-primary">#MorningCoffee</span>{" "}
-                <span className="text-primary">#CaféVibes</span>
-              </p>
-            </div>
+            <p className="text-xs text-foreground leading-relaxed">
+              ✨ Start your morning right with our signature oat milk cappuccino
+              — smooth, rich, and crafted with care. ☕{" "}
+              <span className="text-primary">#SunriseCafé</span>{" "}
+              <span className="text-primary">#MorningCoffee</span>{" "}
+              <span className="text-primary">#CaféVibes</span>
+            </p>
             <div className="flex gap-2">
               <div className="rounded-lg border border-primary/30 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary cursor-pointer">
                 Copy caption
@@ -191,7 +209,9 @@ function ProductMockup() {
               style={{ background: "oklch(0.13 0 0)" }}
             >
               <div className="text-base font-bold text-foreground">{s.val}</div>
-              <div className="text-xs text-muted-foreground mt-0.5">{s.label}</div>
+              <div className="text-xs text-muted-foreground mt-0.5">
+                {s.label}
+              </div>
             </div>
           ))}
         </div>

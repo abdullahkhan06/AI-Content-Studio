@@ -1,6 +1,7 @@
 "use client";
 
-import { SignUpButton } from "@clerk/nextjs";
+import Link from "next/link";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { Check } from "@phosphor-icons/react";
 
@@ -98,7 +99,9 @@ export function Pricing() {
                   <span className="text-4xl font-bold">${plan.price}</span>
                   <span className="text-muted-foreground text-sm">/mo</span>
                 </div>
-                <p className="text-muted-foreground text-sm">{plan.description}</p>
+                <p className="text-muted-foreground text-sm">
+                  {plan.description}
+                </p>
               </div>
 
               <ul className="space-y-2.5 mb-8 flex-1">
@@ -113,14 +116,24 @@ export function Pricing() {
                 ))}
               </ul>
 
-              <SignUpButton mode="modal">
+              <SignedOut>
                 <Button
+                  asChild
                   className="w-full font-semibold"
                   variant={plan.featured ? "default" : "outline"}
                 >
-                  Get started
+                  <Link href="/sign-up">Get started</Link>
                 </Button>
-              </SignUpButton>
+              </SignedOut>
+              <SignedIn>
+                <Button
+                  asChild
+                  className="w-full font-semibold"
+                  variant={plan.featured ? "default" : "outline"}
+                >
+                  <Link href="/dashboard">Go to dashboard</Link>
+                </Button>
+              </SignedIn>
             </div>
           ))}
         </div>

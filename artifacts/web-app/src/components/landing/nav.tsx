@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { Sparkle } from "@phosphor-icons/react";
 
@@ -37,16 +37,12 @@ export function LandingNav() {
 
         <div className="flex items-center gap-3">
           <SignedOut>
-            <SignInButton mode="modal">
-              <Button variant="ghost" size="sm" className="text-sm">
-                Sign in
-              </Button>
-            </SignInButton>
-            <SignUpButton mode="modal">
-              <Button size="sm" className="text-sm font-semibold">
-                Get started
-              </Button>
-            </SignUpButton>
+            <Button asChild variant="ghost" size="sm" className="text-sm">
+              <Link href="/sign-in">Sign in</Link>
+            </Button>
+            <Button asChild size="sm" className="text-sm font-semibold">
+              <Link href="/sign-up">Get started</Link>
+            </Button>
           </SignedOut>
           <SignedIn>
             <Button asChild size="sm" variant="outline" className="text-sm">
