@@ -26,7 +26,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      signInUrl="/sign-in"
+      signUpUrl="/sign-up"
+      appearance={{
+        elements: {
+          card: "shadow-none border border-border",
+          formButtonPrimary: "bg-primary text-primary-foreground hover:bg-primary/90",
+          footer: "hidden",
+        },
+      }}
+    >
       <html lang="en" className="dark">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}

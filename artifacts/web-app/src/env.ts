@@ -12,6 +12,14 @@ const envSchema = z.object({
   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z
     .string()
     .min(1, "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is required"),
+  NEXT_PUBLIC_CLERK_SIGN_IN_URL: z
+    .string()
+    .min(1, "NEXT_PUBLIC_CLERK_SIGN_IN_URL is required")
+    .default("/sign-in"),
+  NEXT_PUBLIC_CLERK_SIGN_UP_URL: z
+    .string()
+    .min(1, "NEXT_PUBLIC_CLERK_SIGN_UP_URL is required")
+    .default("/sign-up"),
 
   AI_INTEGRATIONS_OPENAI_BASE_URL: z.string().url().optional(),
   AI_INTEGRATIONS_OPENAI_API_KEY: z.string().optional(),
