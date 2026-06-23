@@ -5,10 +5,10 @@ const envSchema = z.object({
     .enum(["development", "test", "production"])
     .default("development"),
 
-  DATABASE_URL: z.string().url("DATABASE_URL must be a valid URL").optional(),
+  DATABASE_URL: z.string().url("DATABASE_URL must be a valid URL").min(1, "DATABASE_URL is required"),
 
   CLERK_SECRET_KEY: z.string().min(1, "CLERK_SECRET_KEY is required"),
-  CLERK_WEBHOOK_SECRET: z.string().optional(),
+  CLERK_WEBHOOK_SECRET: z.string().min(1, "CLERK_WEBHOOK_SECRET is required"),
   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z
     .string()
     .min(1, "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is required"),
