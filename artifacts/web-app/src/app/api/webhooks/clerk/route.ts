@@ -1,36 +1,13 @@
 import { headers } from "next/headers";
 import { Webhook } from "svix";
-import { WebhookEvent } from "@clerk/nextjs/server";
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
+import type { WebhookEvent } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
-import { pgTable, text, timestamp, integer, boolean } from "drizzle-orm/pg-core";
-import { randomUUID } from "crypto";
-
-const usersTable = pgTable("users", {
-  id: text("id").primaryKey(),
-  clerkId: text("clerk_id").notNull().unique(),
-  email: text("email").notNull().unique(),
-  firstName: text("first_name"),
-  lastName: text("last_name"),
-  imageUrl: text("image_url"),
-  plan: text("plan").notNull().default("free"),
-  onboardingCompleted: boolean("onboarding_completed").notNull().default(false),
-  imagesGeneratedThisMonth: integer("images_generated_this_month").notNull().default(0),
-  captionsGeneratedThisMonth: integer("captions_generated_this_month").notNull().default(0),
-  videosGeneratedThisMonth: integer("videos_generated_this_month").notNull().default(0),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-});
-
-function getDb() {
-  const url = process.env.DATABASE_URL;
-  if (!url) throw new Error("DATABASE_URL not set");
-  return drizzle(neon(url));
-}
+import { db } from "@/db";
+import { users } from "@/db/schema";
+import { env } from "@/env";
 
 export async function POST(req: Request) {
-  const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
+  const WEBHOOK_SECRET = env.CLERK_WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {
     return new Response("CLERK_WEBHOOK_SECRET not configured", { status: 500 });
@@ -82,16 +59,16 @@ export async function POST(req: Request) {
       return new Response("No primary email", { status: 400 });
     }
 
-    const db = getDb();
-    await db.insert(usersTable).values({
-      id: randomUUID(),
+    const name = [first_name, last_name]
+      .filter(Boolean)
+      .join(" ")
+      .trim() || null;
+
+    await db.insert(users).values({
       clerkId,
       email: primaryEmail,
-      firstName: first_name ?? null,
-      lastName: last_name ?? null,
+      name,
       imageUrl: image_url ?? null,
-      plan: "free",
-      onboardingCompleted: false,
     });
   }
 
@@ -109,26 +86,35 @@ export async function POST(req: Request) {
       (e) => e.id === primary_email_address_id
     )?.email_address;
 
+    const name = [first_name, last_name]
+      .filter(Boolean)
+      .join(" ")
+      .trim() || null;
+
     if (primaryEmail) {
-      const db = getDb();
       await db
-        .update(usersTable)
+        .update(users)
         .set({
           email: primaryEmail,
-          firstName: first_name ?? null,
-          lastName: last_name ?? null,
+          name,
           imageUrl: image_url ?? null,
-          updatedAt: new Date(),
         })
-        .where(eq(usersTable.clerkId, clerkId));
+        .where(eq(users.clerkId, clerkId));
+    } else {
+      await db
+        .update(users)
+        .set({
+          name,
+          imageUrl: image_url ?? null,
+        })
+        .where(eq(users.clerkId, clerkId));
     }
   }
 
   if (eventType === "user.deleted") {
     const { id: clerkId } = evt.data;
     if (clerkId) {
-      const db = getDb();
-      await db.delete(usersTable).where(eq(usersTable.clerkId, clerkId));
+      await db.delete(users).where(eq(users.clerkId, clerkId));
     }
   }
 
