@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { DashboardNav } from "@/components/dashboard/nav";
+import { DashboardShell } from "@/components/dashboard/shell";
+import { DashboardErrorBoundary } from "@/components/dashboard/error-boundary";
 
 export default async function DashboardLayout({
   children,
@@ -14,11 +15,8 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <DashboardNav />
-      <main className="flex-1 overflow-auto">
-        <div className="container mx-auto px-6 py-8 max-w-7xl">{children}</div>
-      </main>
-    </div>
+    <DashboardShell>
+      <DashboardErrorBoundary>{children}</DashboardErrorBoundary>
+    </DashboardShell>
   );
 }
