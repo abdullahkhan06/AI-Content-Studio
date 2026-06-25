@@ -6,7 +6,8 @@
 **Phase Status:** AIA-8 done. AIA-10 + AIA-11 blocked on credentials (MUAPI_API_KEY, R2 keys).  
 **Next:** Provide MUAPI_API_KEY, R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME, R2_PUBLIC_URL to unblock AIA-10/11.
 
-**Phase 0 Audit (2026-06-25):** All acceptance criteria verified. Two bugs found and fixed — see Session 4 log.
+**Phase 0 Audit (2026-06-25):** All acceptance criteria verified. Two bugs found and fixed — see Session 4 log.  
+**Clerk (2026-06-25):** Switched to user-managed external Clerk. Removed Replit-managed key forwarding from next.config.ts. Stale-session guard middleware added.
 
 ---
 
