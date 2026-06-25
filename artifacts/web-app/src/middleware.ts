@@ -4,7 +4,11 @@ const isPublicRoute = createRouteMatcher([
   "/",
   "/sign-in(.*)",
   "/sign-up(.*)",
-  "/api/webhooks(.*)",
+  "/privacy",
+  "/terms",
+  // Webhook lives at /webhooks/* (NOT /api/webhooks/*) to avoid the
+  // api-server artifact intercepting paths=["/api"] before Next.js sees them.
+  "/webhooks(.*)",
 ]);
 
 export default clerkMiddleware(async (auth, request) => {

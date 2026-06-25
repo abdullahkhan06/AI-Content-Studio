@@ -6,6 +6,8 @@
 **Phase Status:** AIA-8 done. AIA-10 + AIA-11 blocked on credentials (MUAPI_API_KEY, R2 keys).  
 **Next:** Provide MUAPI_API_KEY, R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME, R2_PUBLIC_URL to unblock AIA-10/11.
 
+**Phase 0 Audit (2026-06-25):** All acceptance criteria verified. Two bugs found and fixed — see Session 4 log.
+
 ---
 
 ## Concepts Introduced (cumulative)
@@ -61,6 +63,33 @@
 ---
 
 ## Session Log
+
+### 2026-06-25 — Session 4 (Phase 0 Audit)
+
+**Goal:** Validate all Phase 0 integrations, env vars, DB, Clerk auth, webhook, and routing.
+
+**Bugs found and fixed:**
+
+**Bug 1 — Webhook unreachable (critical)**
+- Root cause: api-server artifact owns `paths=["/api"]` in artifact.toml. Every `/api/*` request is routed to Express — Next.js never sees them. The Clerk webhook at `/api/webhooks/clerk` has been returning 404 from Express since day one.
+- Fix: Moved webhook to `src/app/webhooks/clerk/route.ts`. Updated middleware to allow `/webhooks(.*)` as a public route. Old `src/app/api/webhooks/` directory deleted.
+- Action needed: Update Clerk Dashboard webhook URL to `https://<REPLIT_DEV_DOMAIN>/webhooks/clerk`.
+
+**Bug 2 — Schema mismatch (critical)**
+- Root cause: `artifacts/web-app/src/db/schema.ts` defined `users` with `name`/`role` columns. Neon was pushed from `lib/db/src/schema/users.ts` which has `first_name`/`last_name`/`plan` — no `name` or `role`. Webhook inserts would fail on column-not-found.
+- Fix: Replaced web-app `src/db/schema.ts` with the canonical lib/db schema (firstName, lastName, plan, Stripe fields, usage counters, onboardingCompleted). Webhook handler updated to write `firstName`/`lastName` separately.
+
+**All Phase 0 acceptance criteria verified:**
+- ✅ `/` → 200, landing page with all sections + meta + JSON-LD SEO
+- ✅ `/sign-in`, `/sign-up` → 200, Clerk hosted components
+- ✅ `/privacy`, `/terms` → 200
+- ✅ Unauthenticated `/dashboard` → middleware redirects to /sign-in (confirmed via Clerk session logs)
+- ✅ `/webhooks/clerk` POST → 400 "Missing svix headers" (reachable, signature check working)
+- ✅ Neon DB: `pnpm --filter @workspace/db run push` → `[✓] Changes applied`
+- ✅ typecheck: 0 errors | lint: 0 errors
+- ✅ All env vars set: DATABASE_URL, CLERK_SECRET_KEY, CLERK_WEBHOOK_SECRET, NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY, AI_INTEGRATIONS_OPENAI_BASE_URL + API_KEY
+
+**Still missing (Phase 0.5, not Phase 0):** MUAPI_API_KEY, R2_* keys
 
 ### 2026-06-19 — Session 3
 
